@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRIT-LINK｜福岡県行橋市のドローン点検・赤外線調査・空撮</title>
+<meta name="description" content="福岡県行橋市のGRIT-LINKは、一等無人航空機操縦士と赤外線建物診断技能師の資格を持つ操縦士が、ドローンによる外壁の赤外線調査、屋根・太陽光パネルの点検、空撮を行います。全国対応。">
+<link rel="icon" type="image/png" href="images/favicon-64.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ロゴ（No.10 サーマル）に合わせた配色：黒の地に、シルバーの金属と、赤外線カメラの色（オレンジ → マゼンタ → 紫） */
+  :root {
+    --bg:#0a0c0f; --bg2:#101318; --panel:#161a20; --line:#272d36;
+    --text:#e8eaed; --muted:#9aa3ad; --silver:#c9ced4; --white:#fff;
+    --accent:#f7862a;   /* 差し色（見出しの英字、印など） */
+    --accent2:#ffbd3a;  /* 明るい差し色（料金など、目立たせる数字） */
+    --metal:linear-gradient(180deg,#ffffff 0%,#d5d9de 42%,#7b828a 52%,#e6e9ec 70%,#a2a9b1 100%);
+    /* 線や飾りのサーマルのグラデーション */
+    --heat:linear-gradient(90deg,#ffb52e 0%,#f47a24 30%,#e0306b 65%,#8a1fa0 100%);
+    /* ボタンのグラデーション：白い文字が読めるよう、少し深い色にしている */
+    --heat-btn:linear-gradient(100deg,#c2410c 0%,#be185d 50%,#6b21a8 100%);
+    --en:"Orbitron","Noto Sans JP",sans-serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; color:var(--text); line-height:1.9; background:var(--bg); }
+  a { color:inherit; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+  /* ヘッダー */
+  header { position:sticky; top:0; z-index:10; background:rgba(10,12,15,.9); backdrop-filter:blur(8px); }
+  /* ヘッダーの下の線：サーマルの色を薄く */
+  header::after { content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--heat); opacity:.55; }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; height:68px; }
+  /* ロゴ画像（No.10 サーマル。ヘッダーは暗い背景用・簡単な版） */
+  .logo { display:block; text-decoration:none; }
+  .logo img { display:block; height:34px; width:auto; }
+  nav ul { display:flex; gap:28px; list-style:none; font-size:.88rem; letter-spacing:.05em; }
+  /* ナビ：マウスを乗せると白くなり、下にサーマルの線が伸びる */
+  nav a { position:relative; text-decoration:none; color:var(--muted); transition:color .2s; padding:4px 0; }
+  nav a::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--heat);
+    transform:scaleX(0); transform-origin:left; transition:transform .3s ease; }
+  nav a:hover { color:var(--white); }
+  nav a:hover::after { transform:scaleX(1); }
+
+  /* ボタン
+     .btn：いちばん押してほしいボタン（相談・お問い合わせ）。サーマルのグラデーションに白い文字
+     .btn.ghost：2番目のボタン。線だけ
+     マウスを乗せると、色が横に流れて、少し浮き上がる */
+  .btn { display:inline-flex; align-items:center; gap:.7em; color:#fff; font-weight:700; letter-spacing:.08em; text-decoration:none;
+    padding:15px 34px; border-radius:6px; border:0;
+    background:var(--heat-btn); background-size:180% 100%; background-position:0 0;
+    box-shadow:0 6px 22px rgba(190,24,93,.28), inset 0 1px 0 rgba(255,255,255,.18);
+    transition:background-position .5s ease, transform .2s ease, box-shadow .2s ease; }
+  .btn::after { content:"→"; font-weight:400; transition:transform .2s ease; }
+  .btn:hover { background-position:100% 0; transform:translateY(-2px); box-shadow:0 10px 28px rgba(190,24,93,.4), inset 0 1px 0 rgba(255,255,255,.18); }
+  .btn:hover::after { transform:translateX(4px); }
+  .btn:focus-visible { outline:2px solid var(--accent2); outline-offset:3px; }
+  .btn.ghost { background:transparent; color:var(--text); border:1.5px solid rgba(201,206,212,.55); box-shadow:none; }
+  .btn.ghost::after { content:none; }
+  .btn.ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+  .btn.small { padding:9px 20px; font-size:.86rem; border-radius:5px; box-shadow:0 4px 14px rgba(190,24,93,.25); }
+  .btn.small::after { content:none; }
+
+  /* ヒーロー（ロゴの白い地に合わせて明るくし、下の黒い部分へつなぐ） */
+  .hero { position:relative; color:#15181d; text-align:center; padding:64px 0 88px; overflow:hidden;
+    background:radial-gradient(ellipse at 50% 30%,#fefefe 0%,#fefefe 40%,#e7e9ec 100%); }
+  .hero::after { content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--heat); }
+  /* トップのロゴ（明るい背景用・標準の版）と、その動き
+     1 スキャン：白黒のロゴの上を線が走り、通った所から、ぼやけた色のロゴが現れる
+     2 浮かび上がる：色のロゴがぼかしの中からくっきり浮かび、白黒は消える
+     3 熱の脈動：熱のような光が2回、強くなったり弱くなったりする
+     このあと少し休み、白黒に戻ってくり返す（順番と時間は下の script で決める） */
+  .logo-fx { --w:min(330px,78vw); position:relative; width:var(--w); margin:0 auto 30px; }
+  .logo-fx img { display:block; width:var(--w); max-width:none; height:auto; }
+  .fx-gray { filter:grayscale(1) brightness(1.15) contrast(.8); opacity:.55; transition:opacity .8s ease; }
+  .fx-reveal { position:absolute; top:0; left:0; right:0; height:0; overflow:hidden; }
+  .fx-color { filter:blur(3px); opacity:.75; transform:scale(.98);
+    transition:filter 1.2s ease, opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .fx-bar { position:absolute; left:-12%; right:-12%; top:0; height:3px; opacity:0; pointer-events:none;
+    background:linear-gradient(90deg,transparent,#ffb52e 20%,#fff3c4 50%,#ffb52e 80%,transparent);
+    box-shadow:0 0 14px 4px rgba(244,122,36,.55); }
+  .logo-fx.scan .fx-reveal { animation:fxReveal 2.4s cubic-bezier(.5,0,.3,1) forwards; }
+  .logo-fx.scan .fx-bar { animation:fxBar 2.4s cubic-bezier(.5,0,.3,1) forwards; }
+  .logo-fx.done .fx-reveal { height:100%; overflow:visible; animation:none; }
+  .logo-fx.focus .fx-color { filter:blur(0); opacity:1; transform:none; }
+  .logo-fx.focus .fx-gray { opacity:0; }
+  .logo-fx.pulse .fx-color { animation:fxPulse 2.8s ease-in-out 2; }
+  .logo-fx.fade .fx-color { opacity:0; transition:opacity .8s ease; }
+  .logo-fx.fade .fx-gray { opacity:.55; }
+  @keyframes fxReveal { from { height:0; } to { height:100%; } }
+  @keyframes fxBar { 0% { top:0; opacity:0; } 8% { opacity:1; } 92% { opacity:1; } 100% { top:100%; opacity:0; } }
+  @keyframes fxPulse {
+    0%, 100% { filter:drop-shadow(0 0 0 rgba(244,122,36,0)); }
+    50% { filter:drop-shadow(0 0 10px rgba(244,122,36,.6)) drop-shadow(0 0 22px rgba(200,40,122,.35)); } }
+  /* 「動きを減らす」設定の人には、動かさずに色のロゴを見せる */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-fx .fx-gray, .logo-fx .fx-bar { display:none; }
+    .logo-fx .fx-reveal { position:static; height:auto; animation:none !important; }
+    .logo-fx .fx-color { filter:none; opacity:1; transform:none; animation:none !important; } }
+  .hero h1 { font-size:2.3rem; line-height:1.55; letter-spacing:.05em; margin-bottom:18px; }
+  .hero p { font-size:1.02rem; color:#3c434c; max-width:640px; margin:0 auto 34px; }
+  .hero .actions { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+  .hero .btn.ghost { color:#15181d; border-color:#15181d; }
+  .hero .btn.ghost:hover { color:#be185d; border-color:#be185d; }
+  .badges { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:40px; }
+  .badges span { background:rgba(255,255,255,.7); border:1px solid #b9bfc6; color:#2b3139; padding:5px 14px; font-size:.82rem; letter-spacing:.03em; }
+
+  /* GRITに込めた4つの意志 */
+  .grit { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:2px; background:var(--line); border:1px solid var(--line); }
+  .grit div { background:var(--bg); padding:34px 26px 32px; }
+  .grit .letter { font-family:var(--en); font-weight:900; font-size:3.4rem; line-height:1;
+    background:var(--metal); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .grit .word { display:block; font-family:var(--en); font-size:.78rem; letter-spacing:.3em; color:var(--accent); margin:10px 0 14px; }
+  .grit h3 { font-size:1.08rem; color:var(--white); margin-bottom:8px; }
+  .grit p { color:var(--muted); font-size:.9rem; }
+  .grit-link { text-align:center; color:var(--muted); margin-top:30px; font-size:.95rem; }
+  .grit-link strong { color:var(--accent2); font-family:var(--en); letter-spacing:.15em; }
+
+  /* セクション共通 */
+  section { padding:96px 0; background:var(--bg); }
+  section.tint { background:var(--bg2); border-top:1px solid #171b21; border-bottom:1px solid #171b21; }
+  .sec-head { text-align:center; margin-bottom:54px; }
+  .sec-head .en { display:block; font-family:var(--en); color:var(--accent); font-weight:700; letter-spacing:.32em; font-size:.78rem; margin-bottom:10px; }
+  .sec-head h2 { font-size:1.9rem; color:var(--white); letter-spacing:.06em; }
+  .sec-head h2::after { content:""; display:block; width:56px; height:2px; margin:18px auto 0; background:var(--heat); }
+  .sec-head p { color:var(--muted); margin-top:16px; }
+
+  /* 強み */
+  .strengths { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:24px; }
+  .strength { position:relative; background:linear-gradient(180deg,#181c22,#111419); border:1px solid var(--line); padding:36px 28px; transition:border-color .25s, transform .25s; }
+  .strength::before { content:""; position:absolute; top:-1px; left:-1px; width:64px; height:2px; background:var(--heat); }
+  .strength:hover { border-color:rgba(244,122,36,.5); transform:translateY(-3px); }
+  .strength .num { font-family:var(--en); font-size:2.6rem; font-weight:900; line-height:1;
+    background:var(--metal); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .strength h3 { color:var(--white); margin:16px 0 8px; font-size:1.15rem; }
+  .strength p { color:var(--muted); font-size:.93rem; }
+
+  /* サービス */
+  .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; }
+  .service { background:var(--panel); border:1px solid var(--line); border-top:2px solid #3a414b; padding:32px 24px; transition:border-color .25s; }
+  .service:hover { border-color:rgba(244,122,36,.45); }
+  .service.main { border-top:0; background:linear-gradient(180deg,#22151c,#161a20 60%); position:relative; }
+  .service.main::before { content:""; position:absolute; left:-1px; right:-1px; top:-1px; height:2px; background:var(--heat); }
+  .service svg { width:44px; height:44px; stroke:var(--silver); fill:none; stroke-width:1.5; margin-bottom:16px; }
+  .service.main svg { stroke:var(--accent2); }
+  .service h3 { color:var(--white); font-size:1.1rem; margin-bottom:8px; }
+  .service p { color:var(--muted); font-size:.92rem; }
+  .service .tag { display:inline-block; background:var(--heat-btn); color:#fff; font-weight:700; font-size:.72rem; letter-spacing:.1em; padding:1px 10px; margin-bottom:12px; }
+
+  /* 赤外線調査の詳細 */
+  .feature { display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center; }
+  .thermo { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .thermo figure { margin:0; }
+  .thermo img { display:block; width:100%; height:auto; border:1px solid var(--line); }
+  .thermo figcaption { font-size:.78rem; color:var(--muted); text-align:center; margin-top:6px; letter-spacing:.1em; }
+  .thermo .cap-all { grid-column:1 / -1; font-size:.8rem; color:var(--muted); }
+  .feature .en { font-family:var(--en); }
+  .feature h3 { font-size:1.5rem; color:var(--white); margin:8px 0 16px; line-height:1.55; }
+  .feature p { color:#c3c9cf; }
+  .feature ul { list-style:none; margin-top:18px; }
+  .feature li { padding:11px 0 11px 30px; border-bottom:1px solid var(--line); position:relative; }
+  .feature li::before { content:"◆"; position:absolute; left:4px; color:var(--accent); font-size:.8rem; top:14px; }
+  .note { font-size:.8rem; color:var(--muted) !important; margin-top:16px; }
+
+  /* 料金 */
+  table { width:100%; border-collapse:collapse; background:var(--panel); }
+  th, td { border:1px solid var(--line); padding:17px 20px; text-align:left; vertical-align:top; }
+  th { background:linear-gradient(180deg,#2a3039,#1d2128); color:var(--white); font-weight:500; letter-spacing:.05em; }
+  td.price { white-space:nowrap; font-weight:700; color:var(--accent2); }
+  td.price small { color:var(--muted); font-weight:400; }
+  .table-wrap { overflow-x:auto; }
+
+  /* 安全と資格 */
+  .safety { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; }
+  .box { background:var(--panel); border:1px solid var(--line); padding:32px; }
+  .box h3 { color:var(--white); margin-bottom:14px; font-size:1.1rem; border-left:3px solid var(--accent); padding-left:12px; }
+  .box dl div { padding:12px 0; border-bottom:1px dashed var(--line); }
+  .box dt { font-weight:700; font-size:.94rem; }
+  .box dd { color:var(--muted); font-size:.89rem; }
+
+  /* 流れ */
+  .flow { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; counter-reset:flow; }
+  .flow div { background:var(--panel); border:1px solid var(--line); padding:28px 20px; text-align:center; }
+  .flow div::before { counter-increment:flow; content:"0" counter(flow); display:flex; align-items:center; justify-content:center;
+    width:46px; height:46px; margin:0 auto 14px; background:var(--heat-btn); color:#fff; font-family:var(--en); font-weight:900;
+    clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%); }
+  .flow h3 { color:var(--white); font-size:1rem; margin-bottom:6px; }
+  .flow p { color:var(--muted); font-size:.87rem; }
+
+  /* よくある質問 */
+  .faq { max-width:820px; margin:0 auto; }
+  details { border:1px solid var(--line); margin-bottom:12px; background:var(--panel); transition:border-color .2s; }
+  details[open] { border-color:rgba(244,122,36,.45); }
+  summary { cursor:pointer; padding:19px 24px; font-weight:700; color:var(--white); list-style:none; }
+  summary::-webkit-details-marker { display:none; }
+  summary::before { content:"Q."; font-family:var(--en); color:var(--accent); margin-right:10px; }
+  details p { padding:0 24px 22px; color:var(--muted); }
+
+  /* 事業者情報 */
+  .profile th { width:28%; background:#14181d; color:var(--accent2); font-weight:700; }
+
+  /* お問い合わせ */
+  /* お問い合わせ：上からサーマルの光が差す背景に、メールの枠を1つ */
+  .contact { position:relative; text-align:center;
+    background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(224,48,107,.16),rgba(224,48,107,0) 70%),
+               radial-gradient(ellipse 40% 40% at 30% 10%,rgba(244,122,36,.12),rgba(244,122,36,0) 70%),var(--bg2); }
+  .contact::before { content:""; position:absolute; left:0; right:0; top:0; height:2px; background:var(--heat); }
+  .contact-items { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:34px; }
+  /* メールの枠：サーマルのグラデーションの細い線で囲む */
+  .contact-items div { position:relative; min-width:320px; padding:28px 44px 24px; border-radius:10px;
+    background:linear-gradient(var(--panel),var(--panel)) padding-box, var(--heat) border-box; border:1.5px solid transparent; }
+  .contact-items .icon { display:block; width:34px; height:34px; margin:0 auto 10px; stroke:var(--accent); fill:none; stroke-width:1.6; }
+  .contact-items small { display:block; color:var(--muted); font-size:.82rem; letter-spacing:.08em; }
+  .contact-items strong { display:block; font-size:1.3rem; color:var(--white); letter-spacing:.04em; margin:4px 0 6px; }
+  .contact .btn { font-size:1.05rem; padding:17px 42px; }
+
+  footer { background:#050608; color:#7d868f; text-align:center; font-size:.8rem; padding:30px 0; letter-spacing:.05em; border-top:1px solid #15181d; }
+  footer .f-logo { display:block; margin-bottom:10px; }
+  footer .f-logo img { display:block; height:40px; width:auto; margin:0 auto; }
+
+  @media (max-width:820px) {
+    nav ul { display:none; }
+    .hero { padding:40px 0 70px; }
+    .hero h1 { font-size:1.6rem; }
+    .feature { grid-template-columns:1fr; }
+    section { padding:68px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top"><img src="images/logo-simple-dark.png" alt="GRIT-LINK" width="337" height="80"></a>
+    <nav>
+      <ul>
+        <li><a href="#service">サービス</a></li>
+        <li><a href="#infrared">赤外線調査</a></li>
+        <li><a href="#price">料金</a></li>
+        <li><a href="#safety">安全と資格</a></li>
+        <li><a href="#about">事業者情報</a></li>
+      </ul>
+    </nav>
+    <a class="btn small" href="#contact">お問い合わせ</a>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <!-- トップのロゴ：スキャン → 浮かび上がる → 熱の脈動 を、ときどきくり返す -->
+    <div class="logo-fx" id="logoFx">
+      <img class="fx-gray" src="images/logo-full-light.png" alt="" width="660" height="576">
+      <div class="fx-reveal"><img class="fx-color" src="images/logo-full-light.png" alt="GRIT-LINK DRONE SOLUTIONS ― GUTS | RESILIENCE | INITIATIVE | TENACITY" width="660" height="576"></div>
+      <i class="fx-bar"></i>
+    </div>
+    <h1>高い所も、見えない劣化も、<br>ドローンで確かめる。</h1>
+    <p>福岡県を拠点に、ドローンによる外壁の赤外線調査、屋根や太陽光パネルの点検、空撮を行います。足場を組まずに、早く、安く、安全に調べられます。</p>
+    <div class="actions">
+      <a class="btn" href="#contact">無料で相談する</a>
+      <a class="btn ghost" href="#service">サービスを見る</a>
+    </div>
+    <div class="badges">
+      <span>一等無人航空機操縦士</span>
+      <span>赤外線建物診断技能師</span>
+      <span>国土交通省 飛行許可・承認 包括申請済み（全国）</span>
+    </div>
+  </div>
+</div>
+
+<section class="tint" id="grit">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">OUR SPIRIT</span>
+      <h2>GRITに込めた、4つの意志</h2>
+    </div>
+    <div class="grit">
+      <div>
+        <div class="letter">G</div><span class="word">GUTS</span>
+        <h3>決める勇気</h3>
+        <p>飛ばすか、飛ばさないか。風や天候が危ないときは「今日は飛ばさない」と決める勇気も持って、安全を第一にします。</p>
+      </div>
+      <div>
+        <div class="letter">R</div><span class="word">RESILIENCE</span>
+        <h3>立て直す力</h3>
+        <p>天候や現場の状況が変わっても、すぐに計画を立て直し、調査に合った条件で飛行します。</p>
+      </div>
+      <div>
+        <div class="letter">I</div><span class="word">INITIATIVE</span>
+        <h3>自ら動く</h3>
+        <p>許可の確認、周辺への周知、関係者との調整を、こちらから先に進めます。お客さまの手間を減らします。</p>
+      </div>
+      <div>
+        <div class="letter">T</div><span class="word">TENACITY</span>
+        <h3>やり抜く</h3>
+        <p>撮影した熱画像を一枚ずつ確かめ、最後の報告書まで手を抜かずに仕上げます。</p>
+      </div>
+    </div>
+    <p class="grit-link">そして <strong>LINK</strong>。空からの調査と、お客さまの建物の管理をつなぎます。</p>
+  </div>
+</section>
+
+<section id="strength">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">STRENGTH</span>
+      <h2>GRIT-LINKが選ばれる理由</h2>
+    </div>
+    <div class="strengths">
+      <div class="strength">
+        <div class="num">01</div>
+        <h3>国家資格の最上位「一等」</h3>
+        <p>一等無人航空機操縦士と二等無人航空機操縦士の国家資格を持つ操縦士が、自ら飛ばします。</p>
+      </div>
+      <div class="strength">
+        <div class="num">02</div>
+        <h3>撮るだけで終わらない診断</h3>
+        <p>赤外線建物診断技能師として、撮影した熱画像を読み解き、劣化の疑いがある場所を報告書にまとめます。</p>
+      </div>
+      <div class="strength">
+        <div class="num">03</div>
+        <h3>全国の飛行許可を取得済み</h3>
+        <p>国土交通省の飛行許可・承認（包括申請、飛行経路は日本全国）を取得しています。お急ぎの案件にも対応しやすい体制です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="service">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">SERVICE</span>
+      <h2>サービス</h2>
+      <p>建物の管理をする方、工事をする方、発電所を運営する方を支えます。</p>
+    </div>
+    <div class="services">
+      <div class="service main">
+        <span class="tag">主力</span>
+        <svg viewBox="0 0 48 48"><rect x="8" y="6" width="32" height="36" rx="2"/><path d="M14 14h6M28 14h6M14 22h6M28 22h6M14 30h6M28 30h6"/><circle cx="34" cy="34" r="6"/></svg>
+        <h3>外壁の赤外線調査</h3>
+        <p>マンションやビルの外壁タイルやモルタルの浮きを、熱画像で調べます。足場を組まずに、建物全体を短期間で確認できます。</p>
+      </div>
+      <div class="service">
+        <svg viewBox="0 0 48 48"><path d="M6 24 24 8l18 16"/><path d="M11 20v20h26V20"/><path d="M20 40V28h8v12"/></svg>
+        <h3>屋根・建物の点検</h3>
+        <p>屋根に上らずに、瓦のずれ、板金の浮き、雨どいの詰まりなどを撮影します。塗装会社やリフォーム会社の見積もり用の撮影もお受けします。</p>
+      </div>
+      <div class="service">
+        <svg viewBox="0 0 48 48"><path d="M6 34 14 14h28l-8 20z"/><path d="M10 24h28M20 14l-4 20M32 14l-4 20"/><path d="M24 34v8M16 42h16"/></svg>
+        <h3>太陽光パネルの点検</h3>
+        <p>パネルの温度の異常（ホットスポット）を赤外線カメラで見つけます。発電量の低下や故障の早期発見に役立ちます。</p>
+      </div>
+      <div class="service">
+        <svg viewBox="0 0 48 48"><rect x="6" y="14" width="28" height="22" rx="3"/><path d="m34 21 8-5v18l-8-5"/><circle cx="20" cy="25" r="5"/></svg>
+        <h3>空撮（写真・動画）</h3>
+        <p>工事の進み具合の記録、施設や敷地の全景、災害のあとの被害状況の確認など。点検や工事の管理に役立つ写真と動画を撮影します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="infrared">
+  <div class="wrap">
+    <div class="feature">
+      <div class="thermo">
+        <figure><img src="images/infrared_visible.jpg" alt="ドローンで撮影したタイル外壁の可視画像" width="738" height="588" loading="lazy"><figcaption>可視画像</figcaption></figure>
+        <figure><img src="images/infrared_thermal.jpg" alt="同じ外壁の赤外線画像。範囲を指定して温度を測っている" width="738" height="588" loading="lazy"><figcaption>赤外線画像</figcaption></figure>
+        <p class="cap-all">GRIT-LINKが撮影し、解析した外壁の画像です。範囲を決めて温度を測り、温度の差から劣化の疑いがある場所を探します。</p>
+      </div>
+      <div>
+        <span class="en" style="color:var(--accent);font-weight:bold;letter-spacing:.2em;font-size:.82rem;">INFRARED SURVEY</span>
+        <h3>外壁の定期調査にも、<br>ドローンの赤外線調査を。</h3>
+        <p>建築基準法第12条に基づく定期報告では、外壁の全面調査に、ドローンを使った赤外線調査も使えることが国土交通省のガイドラインで示されています。</p>
+        <ul>
+          <li>足場やゴンドラが要らないので、費用と期間を抑えられる</li>
+          <li>居住者や利用者への影響が少ない</li>
+          <li>建物全体を、熱画像の記録として残せる</li>
+          <li>調査の結果を、写真付きの報告書でお渡し</li>
+        </ul>
+        <p class="note">※ 定期報告書の作成と提出は、建築士などの資格者が行います。GRIT-LINKは撮影と解析を担当し、資格者の方と連携して進めます。<br>※ 赤外線調査は、天候や外壁の向き、時間帯の影響を受けます。調査に適した日を選んで実施します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="price">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">PRICE</span>
+      <h2>料金の目安</h2>
+      <p>建物の大きさや場所、条件によって変わります。まずはお気軽にお見積りをご依頼ください。</p>
+    </div>
+    <!-- 2026年11月時点の全国の相場（業者サイトの公開情報）の中ほどに合わせた金額 -->
+    <div class="table-wrap">
+      <table>
+        <tr><th>サービス</th><th>内容</th><th>料金（税込）</th></tr>
+        <tr><td>外壁の赤外線調査</td><td>撮影、熱画像の解析、報告書の作成</td><td class="price">1㎡あたり 350円〜<br><small>（最低料金 150,000円）</small></td></tr>
+        <tr><td>屋根・建物の点検</td><td>撮影（写真20〜40枚）、簡易報告書（戸建て住宅）</td><td class="price">20,000円〜</td></tr>
+        <tr><td>太陽光パネルの点検（住宅用）</td><td>赤外線撮影、異常箇所の報告書（10kW未満）</td><td class="price">30,000円〜</td></tr>
+        <tr><td>太陽光パネルの点検（産業用）</td><td>赤外線撮影、異常箇所の報告書（10kW以上）</td><td class="price">60,000円〜</td></tr>
+        <tr><td>空撮</td><td>写真または動画の撮影、半日（3〜4時間）まで（編集は別料金）</td><td class="price">50,000円〜</td></tr>
+      </table>
+    </div>
+    <p class="note">※ 別途交通費をいただく場合もあります。※ 天候による延期の場合、追加料金はいただきません。</p>
+  </div>
+</section>
+
+<section id="safety">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">SAFETY &amp; LICENSE</span>
+      <h2>安全への取り組みと資格</h2>
+    </div>
+    <div class="safety">
+      <div class="box">
+        <h3>保有資格</h3>
+        <dl>
+          <div><dt>一等無人航空機操縦士（国家資格）</dt><dd>2026年取得</dd></div>
+          <div><dt>二等無人航空機操縦士（国家資格）</dt><dd>2025年取得</dd></div>
+          <div><dt>赤外線建物診断技能師</dt><dd>熱画像による建物の劣化診断</dd></div>
+          <div><dt>第三級陸上特殊無線技士</dt><dd>無線設備の操作</dd></div>
+        </dl>
+      </div>
+      <div class="box">
+        <h3>飛行許可と安全管理</h3>
+        <dl>
+          <div><dt>国土交通省 無人航空機の飛行許可・承認（包括申請済み）</dt><dd>大阪航空局　阪空運航第28650号（飛行経路は日本全国）</dd></div>
+          <div><dt>賠償責任保険（加入済み）</dt><dd>エアロエントリー社のドローン保険　対人1億円、対物5,000万円</dd></div>
+          <div><dt>飛行前の確認</dt><dd>現地の下見、飛行計画の通報、周辺への周知、点検表による機体の確認を、毎回行います。</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="flow">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">FLOW</span>
+      <h2>ご依頼の流れ</h2>
+    </div>
+    <div class="flow">
+      <div><h3>お問い合わせ</h3><p>メールで、場所と内容をお知らせください。</p></div>
+      <div><h3>お見積り</h3><p>必要に応じて現地を確認し、お見積りをお出しします。</p></div>
+      <div><h3>飛行の準備</h3><p>飛行計画を作り、許可や周辺への周知を整えます。</p></div>
+      <div><h3>撮影・調査</h3><p>天候を見ながら、安全を第一に飛行します。</p></div>
+      <div><h3>報告書の納品</h3><p>写真やデータ、報告書をお渡しします。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">FAQ</span>
+      <h2>よくあるご質問</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>どの地域まで来てもらえますか？</summary>
+        <p>福岡県内を中心に、九州圏内へ伺います。飛行許可は日本全国が対象のため、九州の外の案件もご相談ください（交通費を別途いただきます）。</p>
+      </details>
+      <details>
+        <summary>雨や風の日はどうなりますか？</summary>
+        <p>安全と調査の精度のため、雨の日や風の強い日は飛行しません。日程を変更し、追加の料金はいただきません。</p>
+      </details>
+      <details>
+        <summary>住宅地や建物の近くでも飛ばせますか？</summary>
+        <p>多くの場合、取得済みの飛行許可の範囲で対応できます。場所によっては追加の手続きや、関係者との調整が必要なことがあります。まずは場所をお知らせください。</p>
+      </details>
+      <details>
+        <summary>赤外線調査で、すべての劣化がわかりますか？</summary>
+        <p>赤外線調査は、外壁の浮きなどの疑いがある場所を見つけるのに適した方法ですが、天候や外壁の材料、向きによって検出の精度が変わります。必要に応じて、打診調査などとの組み合わせをご提案します。</p>
+      </details>
+      <details>
+        <summary>撮影した写真や動画は使ってもいいですか？</summary>
+        <p>納品したデータは、お客さまの事業で自由にお使いいただけます。GRIT-LINKの実績として紹介する場合は、事前に許可をいただきます。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">ABOUT</span>
+      <h2>事業者情報</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="profile">
+        <tr><th>屋号</th><td>GRIT-LINK（グリットリンク）</td></tr>
+        <tr><th>代表</th><td>松木場 文彦</td></tr>
+        <tr><th>所在地</th><td>福岡県行橋市</td></tr>
+        <tr><th>事業内容</th><td>ドローンによる建物の赤外線調査、屋根・太陽光パネルの点検、空撮</td></tr>
+        <tr><th>対応エリア</th><td>福岡県内を中心に九州圏内（全国対応可）</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="en">CONTACT</span>
+      <h2>お問い合わせ・お見積り</h2>
+      <p>ご相談やお見積りは無料です。お気軽にご連絡ください。</p>
+    </div>
+    <div class="contact-items">
+      <div><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg><small>メール</small><strong>gritlinkdrive@gmail.com</strong><small>24時間受付・ご相談とお見積りは無料</small></div>
+    </div>
+    <a class="btn" href="mailto:gritlinkdrive@gmail.com?subject=%E3%83%89%E3%83%AD%E3%83%BC%E3%83%B3%E6%A5%AD%E5%8B%99%E3%81%AE%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">メールで問い合わせる</a>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo"><img src="images/logo-simple-dark.png" alt="GRIT-LINK" width="337" height="80"></span>
+  &copy; 2026 GRIT-LINK　福岡県行橋市
+</footer>
+
+<script>
+  /* トップのロゴの動き：スキャン → 浮かび上がる → 熱の脈動 → 休み → 白黒に戻ってくり返す */
+  (() => {
+    const fx = document.getElementById('logoFx');
+    if (!fx || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const T = { scan:2400, focus:1200, pulse:5600, rest:6000, fade:800 };   // 時間（ミリ秒）
+    const cycle = async () => {
+      fx.className = 'logo-fx'; void fx.offsetWidth;          // 最初の状態（白黒）に戻す
+      fx.classList.add('scan');           await wait(T.scan);   // 1 スキャン
+      fx.classList.add('done', 'focus');  await wait(T.focus);  // 2 浮かび上がる
+      fx.classList.add('pulse');          await wait(T.pulse);  // 3 熱の脈動
+      fx.classList.remove('pulse');       await wait(T.rest);   // 休み
+      fx.classList.add('fade');           await wait(T.fade);   // 白黒に戻す
+      cycle();
+    };
+    cycle();
+  })();
+</script>
+</body>
+</html>
